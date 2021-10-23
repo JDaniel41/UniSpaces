@@ -1,6 +1,7 @@
 // Create Express Router for Schools
 const express = require("express");
 const schoolRouter = express.Router();
+const { find } = require("../mongo/functions");
 
 let schools = [
     {
@@ -26,7 +27,9 @@ let schools = [
 ];
 
 schoolRouter.get("", (req, res) => {
-    res.send(schools.map((school) => school.name));
+    find("Schools", {}, (err, docs) => {
+        res.send(docs.map((school) => school.Name));
+    });
 });
 
 schoolRouter.get("/:schoolName", (req, res) => {
