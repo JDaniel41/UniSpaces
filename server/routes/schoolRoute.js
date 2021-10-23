@@ -37,7 +37,7 @@ schoolRouter.get("/:schoolName", (req, res) => {
     if (returnedSchool[0]) {
         res.send(returnedSchool[0].buildings);
     } else {
-        res.status(404).send("School not found");
+        res.status(404).send({ error: "School not found" });
     }
 });
 
