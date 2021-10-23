@@ -16,6 +16,6 @@ app.use("/schools", schoolRouter);
 app.use("/stats", buildingStatsRouter);
 
 // start express app
-app.listen(process.env.PORT || 3000, () => {
-    console.log("server started on port 3000");
+app.listen(process.env.PORT || 3001, () => {
+    console.log("server started on port 3001");
 });
