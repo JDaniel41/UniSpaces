@@ -1,30 +1,24 @@
 // Create Express Router for Schools
 const express = require("express");
 const schoolRouter = express.Router();
-const { find } = require("../mongo/functions");
+const { findSchools, findBuildings } = require("../mongo/functions");
 
-schoolRouter.get("", (req, res) => {
-    find("Schools", {}, (err, docs) => {
-        res.send(docs.map((school) => school.Name));
-    });
+schoolRouter.get("", async (req, res) => {
+    let schools = await findSchools();
+    console.log(schools);
+    res.send(schools.map((school) => school.Name));
 });
 
-schoolRouter.get("/:schoolName", (req, res) => {
-    find("Schools", {}, (err, docs) => {
-        let school = docs.find(
-            (school) => school.Name === req.params.schoolName
-        );
+schoolRouter.get("/:schoolName", async (req, res) => {
+    let buildings = await findBuildings(req.params.schoolName);
 
-        if (school && school.Buildings) {
-            res.send({ buildings: school.Buildings });
-        } else if (!school) {
-            res.status(404).send({ error: "School not found" });
-        } else {
-            res.status(404).send({
-                error: "No buildings found for this school",
-            });
-        }
-    });
+    if (buildings && buildings.Building) {
+        res.send(buildings.Building.map((building) => building.Name));
+    } else if (buildings) {
+        res.status(404).send("No buildings found for school");
+    } else {
+        res.sendStatus(404);
+    }
 });
 
 module.exports = schoolRouter;

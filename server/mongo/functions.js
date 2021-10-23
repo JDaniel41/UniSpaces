@@ -2,20 +2,28 @@ const MongoClient = require("mongodb").MongoClient;
 const mongoose = require("mongoose");
 const { Connection } = require("./Connection");
 
-function insert(client) {
-    Connection.open().then((client) => {});
-}
-function find1(name, query, cb) {
-    Connection.open()
-        .then(async (client) => {
-            const collection = client.db("WebAppData").collection("Schools");
-            //console.log(collection.find(query).toArray(cb)[0].Building);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+async function findSchools() {
+    const client = await Connection.open();
+
+    const collection = client.db("WebAppData").collection("Schools");
+
+    let schools = await collection.find().toArray();
+
+    return schools;
 }
 
+async function findBuildings(schoolName) {
+    const client = await Connection.open();
+
+    const collection = client.db("WebAppData").collection("Schools");
+
+    let buildings = await collection.findOne({
+        Name: schoolName,
+    });
+
+    return buildings;
+}
+// This function is getting response data from mongoDB
 async function getResponseData(schoolName, buildingName) {
     let promptIds = await getPrompts(schoolName, buildingName);
 
@@ -34,7 +42,7 @@ async function getResponseData(schoolName, buildingName) {
         responses: responseData,
     };
 }
-
+// This is getting prompt responses from the mongoDB
 async function getPromptResponses(promptId, schoolName, buildingName) {
     const client = await Connection.open();
 
@@ -68,7 +76,7 @@ async function getPromptResponses(promptId, schoolName, buildingName) {
 
     return returnObject;
 }
-
+// This is getting the prompts for any school or building
 async function getPrompts(schoolName, buildingName) {
     const client = await Connection.open();
 
@@ -87,7 +95,7 @@ async function getPrompts(schoolName, buildingName) {
 
     return foundPrompt;
 }
-
+// This inserts new responses for various questions
 async function insertNewResponse(schoolName, buildingName, promptId, response) {
     const client = await Connection.open();
 
@@ -113,4 +121,10 @@ async function insertNewResponse(schoolName, buildingName, promptId, response) {
 
 function sendResponseData(schoolName, buildingName) {}
 
-module.exports = { insertNewResponse, getResponseData, getPrompts };
+module.exports = {
+    insertNewResponse,
+    getResponseData,
+    getPrompts,
+    findSchools,
+    findBuildings,
+};
