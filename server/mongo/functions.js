@@ -101,16 +101,17 @@ async function insertNewResponse(schoolName, buildingName, promptId, response) {
 
     const collection = client.db("WebAppData").collection("Prompts");
 
+    console.log(promptId);
     // TODO: Get the Prompt Collection name from prompts
     let prompt = await collection.findOne({
         promptId: promptId,
     });
+    console.log(prompt);
 
     const responseCollection = client
         .db("WebAppData")
         .collection(String(prompt.collectionName));
 
-    console.log(Date.now());
     await responseCollection.insertOne({
         schoolName: schoolName,
         buildingName: buildingName,
