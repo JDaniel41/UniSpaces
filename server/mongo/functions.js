@@ -7,35 +7,15 @@ function insert(client){
 
     })
 }
-function find (name, query, cb) {
+function find1 (name, query, cb) {
     Connection.open().then(async (client) => {
-        
-        var SchoolsSchema = new mongoose.Schema({
-            Name: String,
-            Buildings: Array,
-            Building: Array
-        })
-        
-        const doc = await SchoolsSchema.findOne();
 
-        doc instanceof SchoolsSchema; // true
-        doc instanceof mongoose.Model; // true
-        doc instanceof mongoose.Document; // true
-
-        const collection = client.db("WebAppData").collection("Schools");
-        collection.find(query).toArray(cb);
+    const collection = client.db("WebAppData").collection("Schools");
+    //console.log(collection.find(query).toArray(cb)[0].Building);
+        
     }).catch((error) => {
         console.log(error)
     });
-
-    // Connection.open()
-    //     .then((client) => {
-    //         const collection = client.db("WebAppData").collection("Schools");
-    //         collection.find(query).toArray(cb);
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
 }
 
 function getResponseData(schoolName, buildingName) {
@@ -44,8 +24,26 @@ function getResponseData(schoolName, buildingName) {
     // TODO: For each prompt, go in the collection and get the responses
 }
 
-function getPrompts(schoolName, buildingName) {}
+function getPrompts(schoolName,buildingName) {
+
+    Connection.open().then(async (client) => {
+        const collection = client.db("WebAppData").collection("Schools");
+
+        let prompts = await collection.findOne({Name: schoolName, Building : {$elemMatch: {Name: buildingName}}});
+
+        let foundPrompt = prompts.Building.find((building) => {
+            return building.Name === buildingName;
+        });
+
+        console.log(foundPrompt.Prompts);
+
+        return foundPrompt;
+        //console.log(collection.find(schoolName,buildingName));
+    }).catch((error) => {
+        console.log(error)
+    });
+}
 
 function sendResponseData(schoolName, buildingName) {}
 
-module.exports = { find, getResponseData };
+module.exports = { find1, getResponseData, getPrompts };
