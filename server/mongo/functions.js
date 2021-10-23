@@ -34,12 +34,11 @@ async function getResponseData(schoolName, buildingName) {
         })
     );
 
-    console.log(responseData);
-
     return {
         schoolName: schoolName,
         buildingName: buildingName,
         responses: responseData,
+        trendedResponses: 5,
     };
 }
 // This is getting prompt responses from the mongoDB
@@ -67,11 +66,31 @@ async function getPromptResponses(promptId, schoolName, buildingName) {
         return response.value;
     });
 
+    // Make a dictionary of the response type counts
+    let responseCounts = {};
+    responses.forEach((response) => {
+        if (responseCounts[response]) {
+            responseCounts[response] += 1;
+        } else {
+            responseCounts[response] = 1;
+        }
+    });
+
+    // Convert responseCounts to array of tuples
+    let responseCountsArray = [];
+    for (let response in responseCounts) {
+        responseCountsArray.push({
+            name: response,
+            count: responseCounts[response],
+        });
+    }
+
     let returnObject = {
         questionText: prompt.promptText,
         promptId: promptId,
         choices: prompt.choices,
         responses: responses,
+        trainedResponses: responseCountsArray,
     };
 
     return returnObject;
@@ -101,16 +120,17 @@ async function insertNewResponse(schoolName, buildingName, promptId, response) {
 
     const collection = client.db("WebAppData").collection("Prompts");
 
+    console.log(promptId);
     // TODO: Get the Prompt Collection name from prompts
     let prompt = await collection.findOne({
         promptId: promptId,
     });
+    console.log(prompt);
 
     const responseCollection = client
         .db("WebAppData")
         .collection(String(prompt.collectionName));
 
-    console.log(Date.now());
     await responseCollection.insertOne({
         schoolName: schoolName,
         buildingName: buildingName,
