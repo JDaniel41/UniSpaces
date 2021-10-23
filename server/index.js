@@ -4,9 +4,20 @@ const express = require("express");
 // set up express app
 const app = express();
 
-// Set up Get Route
-app.get("/", (req, res) => {
-    res.send("Hello World");
+let schools = [
+    "Clemson University",
+    "Georgia Tech",
+    "University of South Carolina",
+    "University of Georgia",
+];
+
+// Set up a get route that returns a Hello World response
+app.get("/test", (req, res) => {
+    res.send({ response: "Hello World" });
+});
+
+app.get("/schools", (req, res) => {
+    res.send(schools);
 });
 
 // start express app
