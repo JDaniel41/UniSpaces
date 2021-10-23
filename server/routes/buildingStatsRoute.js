@@ -8,6 +8,7 @@ function getDummyData(schoolName, buildingName) {
         responses: [
             {
                 name: "Are people wearing a mask?",
+                promptId: 1,
                 choices: ["Not a lot", "About Half", "Everyone is masking"],
                 lastResponse: "Everyone is masking",
                 allResponse: [
@@ -19,6 +20,7 @@ function getDummyData(schoolName, buildingName) {
             },
             {
                 name: "What is the noise level?",
+                promptId: 2,
                 choices: ["No Noise", "Low", "Medium", "High"],
                 lastResponse: "Medium",
                 allResponse: [
@@ -35,6 +37,15 @@ function getDummyData(schoolName, buildingName) {
 buildingStatsRouter.get("/:schoolName/:buildingName", (req, res) => {
     console.log(req.params.sendAllResponses);
     res.send(getDummyData(req.params.schoolName, req.params.buildingName));
+});
+
+buildingStatsRouter.post("/:schoolName/:buildingName", (req, res) => {
+    // TODO: Add Response to Mongo
+
+    let promptId = req.params.promptId;
+    let newResponse = req.params.choice;
+
+    res.status(200).send({ message: "Request successful." });
 });
 
 module.exports = buildingStatsRouter;
