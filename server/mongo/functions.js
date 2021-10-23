@@ -50,7 +50,11 @@ async function getResponseData(schoolName, buildingName) {
 
     console.log(responseData);
 
-    return responseData;
+    return {
+        schoolName: schoolName,
+        buildingName: buildingName,
+        responses: responseData,
+    };
 }
 
 async function getPromptResponses(promptId, schoolName, buildingName) {
