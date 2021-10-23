@@ -44,27 +44,10 @@ export default function App() {
 
 
   return (
-    <div>
+    <div className="App">
     <Router>
-      {/* <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/post">Post</Link>
-            </li>
-            <li>
-              <Link to="/trends">Trends</Link>
-            </li>
-            <li>
-              <Link to="/get">Get</Link>
-            </li>
-          </ul>
-        </nav> */}
         <div>
-        <Navbar bg="light" variant="light">
+        <Navbar sticky="top" bg="dark" variant="dark">
           <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/post">Post</Nav.Link>

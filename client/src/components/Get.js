@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {useState} from "react";
 import InputForm from "./InputForm.js"
 import Button from 'react-bootstrap/Button'
+import "../styles/Get.css";
 
 export default function Get(props) {
     const axios = require('axios');
@@ -38,22 +39,6 @@ export default function Get(props) {
         output[evt.target.id-1] = tmp;
 
         
-    }
-
-
-    function handleSubmit(){
-        async function postSubmission(){
-            axios.post(`https://hackgt-unispaces.herokuapp.com/stats/${selectedSchool}/${selectedData}/`, output)
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              })
-  
-            }
-        console.log(output);
-        postSubmission();
     }
 
 
@@ -129,7 +114,9 @@ export default function Get(props) {
     //   }, [])
 
     return (
-        <div>
+        <div className="Get">
+            <h1>Get The Latest Status Of A Building On Your Campus</h1>
+            <div className="get-margins">
             <h2>College Campus</h2>
             <InputForm options={schools} onSelectChange={handleChange1}/>
             <br/>
@@ -142,18 +129,18 @@ export default function Get(props) {
             <hr/>
             {data2 !== null &&
             <div>
-                    <h1>{data2.schoolName}</h1>
-                    <h2>{data2.buildingName}</h2>
+                    <h2>{data2.schoolName}</h2>
+                    <h3>Latest update on <span className="bold">{data2.buildingName}</span></h3>
                     {data2.responses.map((info, index) =>(
                         <div key={`div`+index}>
-                            <h3 key={`h3`+index} >{info.questionText}</h3>
+                            <h4 key={`h31`+index} >{info.questionText}</h4>
+                            <h3 key={`h32`+index}>{info.responses[info.responses.length-1]}</h3>
                             {/* {console.log(info.choices)} */}
-                            <InputForm key={`Input`+ index} options={info.choices} id={index+1} onSelectChange={handleChange3}/>
                         </div>
                     ))}
-                    <Button onClick={handleSubmit} variant="outline-primary">Submit</Button>{' '}
+                    
                 </div>}
-
+            </div>
 
             
         </div>
