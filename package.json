@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/JDaniel41/UniSpaces/issues"
   },
-  "homepage": "https://github.com/JDaniel41/UniSpaces#readme"
+  "homepage": "https://github.com/JDaniel41/UniSpaces#readme",
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "react-bootstrap": "^2.0.0",
+    "react-router-dom": "^5.3.0"
+  }
 }
