@@ -1,6 +1,8 @@
 const express = require("express");
 const buildingStatsRouter = express.Router();
 
+const { getResponseData } = require("../mongo/functions");
+
 function getDummyData(schoolName, buildingName) {
     return {
         school: schoolName,
@@ -30,22 +32,43 @@ function getDummyData(schoolName, buildingName) {
                     [4, "Medium"],
                 ],
             },
+            {
+                name: "How full is the parking lot?",
+                promptId: 3,
+                choices: ["Empty", "Somewhat Empty", "Somewhat Full", "Full"],
+                lastResponse: "Somewhat Full",
+                allResponse: [
+                    [1, "Somewhat Full"],
+                    [2, "Somewhat Empty"],
+                    [3, "Empty"],
+                    [4, "Somewhat Full"],
+                ],
+            },
         ],
     };
 }
 
 buildingStatsRouter.get("/:schoolName/:buildingName", (req, res) => {
     console.log(req.params.sendAllResponses);
+    responseData = getResponseData(
+        req.params.schoolName,
+        req.params.buildingName
+    );
     res.send(getDummyData(req.params.schoolName, req.params.buildingName));
 });
 
 buildingStatsRouter.post("/:schoolName/:buildingName", (req, res) => {
     // TODO: Add Response to Mongo
+    // make sure we send buildng and school name
 
     let promptId = req.params.promptId;
     let newResponse = req.params.choice;
-
-    res.status(200).send({ message: "Request successful." });
+    getResponseData(req.params.schoolName, req.params.buildingName).then(
+        (data) => {
+            console.log(data);
+            res.status(200).send(data);
+        }
+    );
 });
 
 module.exports = buildingStatsRouter;
