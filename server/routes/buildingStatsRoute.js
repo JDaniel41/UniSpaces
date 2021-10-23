@@ -49,26 +49,19 @@ function getDummyData(schoolName, buildingName) {
 }
 
 buildingStatsRouter.get("/:schoolName/:buildingName", (req, res) => {
-    console.log(req.params.sendAllResponses);
-    responseData = getResponseData(
-        req.params.schoolName,
-        req.params.buildingName
-    );
-    res.send(getDummyData(req.params.schoolName, req.params.buildingName));
-});
-
-buildingStatsRouter.post("/:schoolName/:buildingName", (req, res) => {
-    // TODO: Add Response to Mongo
-    // make sure we send buildng and school name
-
-    let promptId = req.params.promptId;
-    let newResponse = req.params.choice;
     getResponseData(req.params.schoolName, req.params.buildingName).then(
         (data) => {
             console.log(data);
             res.status(200).send(data);
         }
     );
+});
+
+buildingStatsRouter.post("/:schoolName/:buildingName", (req, res) => {
+    let promptId = req.params.promptId;
+    let newResponse = req.params.choice;
+    // TODO: Update the database with the new response
+    res.status(200).send({ response: "Hello!" });
 });
 
 module.exports = buildingStatsRouter;
