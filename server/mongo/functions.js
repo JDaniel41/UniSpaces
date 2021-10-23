@@ -5,24 +5,25 @@ const { Connection } = require("./Connection");
 function insert(client) {
     Connection.open().then((client) => {});
 }
-function find1 (name, query, cb) {
-    Connection.open().then(async (client) => {
-
-    const collection = client.db("WebAppData").collection("Schools");
-    //console.log(collection.find(query).toArray(cb)[0].Building);
-        
-    }).catch((error) => {
-        console.log(error)
-    });
+function find1(name, query, cb) {
+    Connection.open()
+        .then(async (client) => {
+            const collection = client.db("WebAppData").collection("Schools");
+            //console.log(collection.find(query).toArray(cb)[0].Building);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }
 
 async function getResponseData(schoolName, buildingName) {
     // TODO: Get the prompts for this building
-    let promptIds = getPrompts(schoolName, buildingName);
+    let promptIds = await getPrompts(schoolName, buildingName);
 
     // TODO: For each prompt, go in the collection and get the responses
     let responseData = await Promise.all(
-        promptIds.map(async (promptId) => {
+        promptIds.Prompts.map(async (promptId) => {
+            console.log(promptId);
             return await getPromptResponses(promptId, schoolName, buildingName);
         })
     );
@@ -70,24 +71,23 @@ async function getPromptResponses(promptId, schoolName, buildingName) {
     return returnObject;
 }
 
-function getPrompts(schoolName,buildingName) {
+async function getPrompts(schoolName, buildingName) {
+    const client = await Connection.open();
 
-    Connection.open().then(async (client) => {
-        const collection = client.db("WebAppData").collection("Schools");
+    const collection = client.db("WebAppData").collection("Schools");
 
-        let prompts = await collection.findOne({Name: schoolName, Building : {$elemMatch: {Name: buildingName}}});
-
-        let foundPrompt = prompts.Building.find((building) => {
-            return building.Name === buildingName;
-        });
-
-        console.log(foundPrompt.Prompts);
-
-        return foundPrompt;
-        //console.log(collection.find(schoolName,buildingName));
-    }).catch((error) => {
-        console.log(error)
+    let prompts = await collection.findOne({
+        Name: schoolName,
+        Building: { $elemMatch: { Name: buildingName } },
     });
+
+    let foundPrompt = prompts.Building.find((building) => {
+        return building.Name === buildingName;
+    });
+
+    //console.log(foundPrompt.Prompts);
+
+    return foundPrompt;
 }
 
 function sendResponseData(schoolName, buildingName) {}
