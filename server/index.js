@@ -1,24 +1,15 @@
-// Import Express
 const express = require("express");
+const schoolRouter = require("./routes/schoolRoute");
 
 // set up express app
 const app = express();
-
-let schools = [
-    "Clemson University",
-    "Georgia Tech",
-    "University of South Carolina",
-    "University of Georgia",
-];
 
 // Set up a get route that returns a Hello World response
 app.get("/test", (req, res) => {
     res.send({ response: "Hello World" });
 });
 
-app.get("/schools", (req, res) => {
-    res.send(schools);
-});
+app.use("/schools", schoolRouter);
 
 // start express app
 app.listen(process.env.PORT || 3000, () => {
