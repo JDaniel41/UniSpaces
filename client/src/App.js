@@ -6,6 +6,9 @@ import Home from "./components/Home.js";
 import Post from "./components/Post.js";
 import Trends from "./components/Trends.js";
 import Get from "./components/Get.js";
+import Footer from "./components/Footer.js";
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
 
 import {
@@ -17,14 +20,16 @@ import {
 
 export default function App() {
   const axios = require('axios');
-  const [data, setData] = useState(["test1", "temp1"]);
+  const [data, setData] = useState(["None"]);
 
   useEffect(() => {
       async function getSchools(){
           axios.get('https://hackgt-unispaces.herokuapp.com/schools')
         .then(function (response) {
-          console.log(response);
-          setData(response.data);
+          if (response.status === 200){
+            console.log(response);
+            setData(response.data);
+          }
         })
         .catch(function (error) {
           console.log(error);
@@ -39,8 +44,9 @@ export default function App() {
 
 
   return (
+    <div>
     <Router>
-      <div>
+      {/* <div>
         <nav>
           <ul>
             <li>
@@ -56,7 +62,16 @@ export default function App() {
               <Link to="/get">Get</Link>
             </li>
           </ul>
-        </nav>
+        </nav> */}
+        <div>
+        <Navbar bg="light" variant="light">
+          <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/post">Post</Nav.Link>
+            <Nav.Link as={Link} to="/trends">Trends</Nav.Link>
+            <Nav.Link as={Link} to="/get">Get</Nav.Link>
+          </Nav>
+        </Navbar>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -76,6 +91,9 @@ export default function App() {
         </Switch>
       </div>
     </Router>
+    <Footer />
+    </div>
+    
   );
 }
 
