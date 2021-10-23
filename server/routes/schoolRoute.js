@@ -15,11 +15,13 @@ schoolRouter.get("/:schoolName", (req, res) => {
             (school) => school.Name === req.params.schoolName
         );
 
-        if (school.Buildings) {
-            res.send(school.Buildings);
+        if (school && school.Buildings) {
+            res.send({ buildings: school.Buildings });
+        } else if (!school) {
+            res.status(404).send({ error: "School not found" });
         } else {
             res.status(404).send({
-                response: "No buildings found for this school",
+                error: "No buildings found for this school",
             });
         }
     });

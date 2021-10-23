@@ -1,25 +1,88 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles/App.css';
+import React from "react";
+import {useEffect} from "react";
+import {useState} from "react";
+import Home from "./components/Home.js";
+import Post from "./components/Post.js";
+import Trends from "./components/Trends.js";
+import Get from "./components/Get.js";
 
-function App() {
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+export default function App() {
+  const axios = require('axios');
+  const [data, setData] = useState(["test1", "temp1"]);
+
+  useEffect(() => {
+      async function getSchools(){
+          axios.get('https://hackgt-unispaces.herokuapp.com/schools')
+        .then(function (response) {
+          console.log(response);
+          setData(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .then(function () {
+          // always executed
+        });  
+      }
+
+        getSchools();
+    }, [axios])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/post">Post</Link>
+            </li>
+            <li>
+              <Link to="/trends">Trends</Link>
+            </li>
+            <li>
+              <Link to="/get">Get</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route path="/post">
+            <Post schools={data}/>
+          </Route>
+          <Route path="/trends">
+            <Trends />
+          </Route>
+          <Route path="/get">
+            <Get schools={data}/>
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
-export default App;
+
+
+
+
+
+
+
