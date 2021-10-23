@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/JDaniel41/UniSpaces/issues"
   },
-  "homepage": "https://github.com/JDaniel41/UniSpaces#readme"
+  "homepage": "https://github.com/JDaniel41/UniSpaces#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
