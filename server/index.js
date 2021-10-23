@@ -5,7 +5,7 @@ const buildingStatsRouter = require("./routes/buildingStatsRoute");
 
 // set up express app
 const app = express();
-app.use(cors);
+app.use(cors());
 
 // Set up a get route that returns a Hello World response
 app.get("/test", (req, res) => {
