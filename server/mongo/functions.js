@@ -17,10 +17,8 @@ function find1(name, query, cb) {
 }
 
 async function getResponseData(schoolName, buildingName) {
-    // TODO: Get the prompts for this building
     let promptIds = await getPrompts(schoolName, buildingName);
 
-    // TODO: For each prompt, go in the collection and get the responses
     let responseData = await Promise.all(
         promptIds.Prompts.map(async (promptId) => {
             console.log(promptId);
@@ -90,6 +88,29 @@ async function getPrompts(schoolName, buildingName) {
     return foundPrompt;
 }
 
+async function insertNewResponse(schoolName, buildingName, promptId, response) {
+    const client = await Connection.open();
+
+    const collection = client.db("WebAppData").collection("Prompts");
+
+    // TODO: Get the Prompt Collection name from prompts
+    let prompt = await collection.findOne({
+        promptId: promptId,
+    });
+
+    const responseCollection = client
+        .db("WebAppData")
+        .collection(String(prompt.collectionName));
+
+    console.log(Date.now());
+    await responseCollection.insertOne({
+        schoolName: schoolName,
+        buildingName: buildingName,
+        value: response,
+        timestamp: Date.now(),
+    });
+}
+
 function sendResponseData(schoolName, buildingName) {}
 
-module.exports = { find1, getResponseData, getPrompts };
+module.exports = { insertNewResponse, getResponseData, getPrompts };
