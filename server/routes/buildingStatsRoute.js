@@ -14,7 +14,8 @@ let buildingStats = [
 ];
 
 buildingStatsRouter.get("/:schoolName/:buildingName", (req, res) => {
-    res.send(schools);
+    console.log(req.params.sendAllResponses);
+    res.send({});
 });
 
 module.exports = buildingStatsRouter;
