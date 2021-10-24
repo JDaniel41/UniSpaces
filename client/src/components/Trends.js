@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import "../styles/Trends.css"
 import {useState} from "react";
 import InputForm from "./InputForm.js"
 import {

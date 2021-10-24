@@ -1,8 +1,9 @@
 import react from "react";
+import "../styles/About.css"
 
 export default function AboutUs() {
     return (
-        <div>
+        <div className="About">
             <h1>About Unisplash</h1>
             <p>
                 Have you ever wanted to get a live headcount of what was
@@ -12,7 +13,7 @@ export default function AboutUs() {
                 there are any spaces left in the Commuter lot, or how loud the
                 study lounge is! Try our app today!
             </p>
-
+            <br/>
             <h1>The Creators</h1>
             <p>
                 Aaron Woolfolk, Jonathan Daniel and Tahj Anderson are the
