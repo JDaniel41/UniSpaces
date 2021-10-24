@@ -9,6 +9,7 @@ import Get from "./components/Get.js";
 import Footer from "./components/Footer.js";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import AboutUs from "./components/AboutUs";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -48,12 +49,16 @@ export default function App() {
             <Nav.Link as={Link} to="/post">Post</Nav.Link>
             <Nav.Link as={Link} to="/trends">Trends</Nav.Link>
             <Nav.Link as={Link} to="/get">Get</Nav.Link>
+            <Nav.Link as={Link} to="/about">About</Nav.Link>
           </Nav>
         </Navbar>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
                     <Switch>
+                        <Route path="/about">
+                            <AboutUs />
+                        </Route>
                         <Route path="/post">
                             <Post schools={data} />
                         </Route>
