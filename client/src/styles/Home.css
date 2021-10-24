@@ -1,5 +1,6 @@
 .Home{
     margin: 3rem;
+    min-height: 150vh;
 }
 
 .Home-logo {
@@ -14,6 +15,15 @@
     .Home-logo {
       animation: App-logo-spin infinite 20s linear;
     }
+  }
+
+  .Home-margins{
+    width: 65rem;
+    margin: 0 auto;
+  }
+
+  .Home-space{
+      width:5rem;
   }
 
 
