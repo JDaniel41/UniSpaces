@@ -4,12 +4,12 @@ import "../styles/About.css";
 export default function AboutUs() {
     return (
         <div className="About">
-            <h1>About Unispaces</h1>
+            <h1>About UniSpaces</h1>
             <p>
                 Have you ever wanted to get a live headcount of what was
-                happening at your university? We did, and developed Unispaces to
+                happening at your university? We did, and developed UniSpaces to
                 connect students and let them know what was happening! With
-                Unispaces, you can find out how loud it is in the library, if
+                UniSpaces, you can find out how loud it is in the library, if
                 there are any spaces left in the Commuter lot, or how loud the
                 study lounge is! Try our app today!
             </p>
