@@ -1,19 +1,19 @@
 import react from "react";
-import "../styles/About.css"
+import "../styles/About.css";
 
 export default function AboutUs() {
     return (
         <div className="About">
-            <h1>About Unisplash</h1>
+            <h1>About Unispaces</h1>
             <p>
                 Have you ever wanted to get a live headcount of what was
-                happening at your university? We did, and developed Unisplash to
+                happening at your university? We did, and developed Unispaces to
                 connect students and let them know what was happening! With
-                unisplash, you can find out how loud it is in the library, if
+                Unispaces, you can find out how loud it is in the library, if
                 there are any spaces left in the Commuter lot, or how loud the
                 study lounge is! Try our app today!
             </p>
-            <br/>
+            <br />
             <h1>The Creators</h1>
             <p>
                 Aaron Woolfolk, Jonathan Daniel and Tahj Anderson are the
