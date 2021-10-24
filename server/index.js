@@ -12,11 +12,6 @@ app.use(cors());
 
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 
-// Serve the Home Page
-app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
-});
-
 // Set up a get route that returns a Hello World response
 app.get("/test", (req, res) => {
     res.send({ response: "Hello World" });
@@ -24,6 +19,11 @@ app.get("/test", (req, res) => {
 
 app.use("/schools", schoolRouter);
 app.use("/stats", buildingStatsRouter);
+
+// Serve the Home Page
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+});
 
 // start express app
 app.listen(process.env.PORT || 3001, () => {
