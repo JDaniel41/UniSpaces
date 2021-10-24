@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Home.css";
-import Logo from "../img/Logo2.png";
+import Logo from "../img/logo4.png";
 // import Logo2 from "../img/Logo2.jpg";
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';

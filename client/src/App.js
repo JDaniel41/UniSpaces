@@ -58,7 +58,7 @@ export default function App() {
                             <Post schools={data} />
                         </Route>
                         <Route path="/trends">
-                            <Trends />
+                            <Trends schools={data}/>
                         </Route>
                         <Route path="/get">
                             <Get schools={data} />

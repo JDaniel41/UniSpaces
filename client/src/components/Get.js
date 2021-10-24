@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import {useState} from "react";
 import InputForm from "./InputForm.js"
-import Button from 'react-bootstrap/Button'
 import "../styles/Get.css";
 
 export default function Get(props) {
@@ -117,7 +116,7 @@ export default function Get(props) {
         <div className="Get">
             <h1>Get The Latest Status Of A Building On Your Campus</h1>
             <div className="get-margins">
-            <h2>College Campus</h2>
+            <h2>Location Selection</h2>
             <InputForm options={schools} onSelectChange={handleChange1}/>
             <br/>
             {/* <SelectedSchoolFunction /> */}
