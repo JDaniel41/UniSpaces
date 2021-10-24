@@ -5,7 +5,6 @@ const { findSchools, findBuildings } = require("../mongo/functions");
 
 schoolRouter.get("", async (req, res) => {
     let schools = await findSchools();
-    console.log(schools);
     res.send(schools.map((school) => school.Name));
 });
 

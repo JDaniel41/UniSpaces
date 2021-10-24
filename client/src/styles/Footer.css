@@ -1,0 +1,11 @@
+.footer-container{
+    display: flex;
+    flex-flow: row nowrap;
+    /* justify-content: flex-end; */
+}
+.white-text{
+    color:#ffffff;
+}
+/* .footer-items{
+
+} */
